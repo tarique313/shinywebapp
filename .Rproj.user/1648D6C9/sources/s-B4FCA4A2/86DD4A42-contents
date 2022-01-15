@@ -1,0 +1,74 @@
+Course Project: Shiny Application and Reproducible Pitch
+========================================================
+author: Gazi Tarique Mahmud
+date: 16th January 2022
+autosize: true
+
+========================================================
+
+# Assignment
+This is the final assignment of the Developing Data Products Course from Johns Hopkins University Data Science Specialization. This is the scope:
+
+1. Write a shiny application with associated supporting documentation. 
+2. Deploy the application on Rstudio’s shiny server
+3. Share the application link by pasting it into the provided text box
+4. Share your server.R and ui.R code on github
+
+========================================================
+# Dataset
+I have used a standard R dataset, called mtcars.
+```{r}
+devtools::install_github("aldomann/mariokart")
+library(mariokart)
+head(mkwii_vehicles)
+```
+
+
+========================================================
+
+# Algorithm
+
+The “algorithm” is simple and runs the linear model function.
+
+```{r}
+library(mariokart)
+library(ggplot2)
+library(dplyr)
+data(mkwii_vehicles)
+data(mkwii_characters)
+data(mk8_vehicles)
+select_values <- colnames(mkwii_characters)
+select_values <- select_values[! select_values %in% c('Character', 'Class')] 
+```
+
+========================================================
+
+# Output: 
+
+```{r, echo=FALSE}
+library(mariokart)
+library(ggplot2)
+library(dplyr)
+data(mkwii_vehicles)
+data(mkwii_characters)
+data(mk8_vehicles)
+
+mkwii_vehicles %>%
+  filter(vehicle_type == "bike") %>%
+  mutate(total_stats = rowSums(select_if(., is.numeric))) %>%
+  select(starts_with("vehicle"), drift_type, weight_class, total_stats) %>%
+  arrange(vehicle_class) %>%
+  ggplot() +
+  aes(x = reorder(vehicle, total_stats), y = total_stats, fill = vehicle_class) +
+  geom_col() +
+  labs(
+    title = "Bikes in Mario Kart Wii by total statistics",
+    x = "Kart name",
+    y = "Total statistics",
+    fill = "Vehicle class"
+  ) +
+  facet_grid(drift_type ~ ., scales = "free_y", space = "free_y") +
+  coord_flip()
+```
+
+Please, [Click here to access the shiny webapp](https://gtarique.shinyapps.io/shinyApp/)

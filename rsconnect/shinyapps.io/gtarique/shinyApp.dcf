@@ -1,0 +1,13 @@
+name: shinyApp
+title: shinyApp
+username:
+account: gtarique
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5447961
+bundleId: 5472354
+url: https://gtarique.shinyapps.io/shinyApp/
+when: 1642277126.33488
+lastSyncTime: 1642277126.33488
+asMultiple: FALSE
+asStatic: FALSE
